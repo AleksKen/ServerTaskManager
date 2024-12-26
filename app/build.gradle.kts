@@ -1,5 +1,7 @@
 plugins {
-	java
+	application
+	checkstyle
+	jacoco
 	id("org.springframework.boot") version "3.4.2-SNAPSHOT"
 	id("io.spring.dependency-management") version "1.1.7"
 }
@@ -11,6 +13,10 @@ java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
+}
+
+application {
+	mainClass = "hexlet.code.app.AppApplication"
 }
 
 configurations {
