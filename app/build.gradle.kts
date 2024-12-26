@@ -38,6 +38,16 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.withType<Test> {
+tasks.test {
 	useJUnitPlatform()
+	// https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/
+	testLogging {
+		exceptionFormat = TestExceptionFormat.FULL
+		events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+		// showStackTraces = true
+		// showCauses = true
+		showStandardStreams = true
+	}
 }
+
+tasks.jacocoTestReport { reports { xml.required.set(true) } }
