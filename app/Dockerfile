@@ -13,7 +13,7 @@ RUN ./gradlew --no-daemon dependencies
 
 # Копируем исходный код и конфиги
 COPY src src
-COPY config config
+#COPY config config
 
 # Сборка проекта
 RUN ./gradlew --no-daemon build
