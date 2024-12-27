@@ -19,7 +19,10 @@ COPY config config
 RUN ./gradlew --no-daemon build
 RUN ./gradlew --no-daemon installDist
 
+# Настройка JVM параметров и профиля Spring
 ENV JAVA_OPTS "-Xmx512M -Xms512M"
+ENV SPRING_PROFILES_ACTIVE "production"
+
 EXPOSE 7070
 
-CMD build/install/app/bin/app
+CMD build/install/app/bin/app --spring.profiles.active=$SPRING_PROFILES_ACTIVE

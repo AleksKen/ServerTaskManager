@@ -34,11 +34,18 @@ repositories {
 }
 
 dependencies {
+	// spring boot
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	// lombok
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
+	// tests
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	// DB
+	runtimeOnly("com.h2database:h2:2.2.224")
+	implementation("org.postgresql:postgresql:42.7.3")
 }
 
 tasks.test {
