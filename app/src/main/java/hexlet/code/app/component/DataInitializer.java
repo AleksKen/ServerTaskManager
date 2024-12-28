@@ -19,7 +19,7 @@ public class DataInitializer implements ApplicationRunner {
     private final AdminInfo admin;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         var email = admin.getEmail();
         var password = admin.getPassword();
         var userData = new User();
