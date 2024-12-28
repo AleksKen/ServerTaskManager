@@ -1,7 +1,6 @@
 package hexlet.code.app.component;
 
 import hexlet.code.app.model.User;
-import hexlet.code.app.repository.UserRepository;
 import hexlet.code.app.service.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
