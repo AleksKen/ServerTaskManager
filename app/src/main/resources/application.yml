@@ -18,3 +18,7 @@ spring:
 server:
   address: 0.0.0.0
   port: ${PORT:8080}
+
+admin:
+  email: hexlet@example.com
+  password: qwerty
