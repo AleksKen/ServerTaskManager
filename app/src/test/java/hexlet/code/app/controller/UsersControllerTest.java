@@ -102,7 +102,7 @@ public class UsersControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        var request = post("/api/users")
+        var request = post("/api/users").with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(testUser));
 
