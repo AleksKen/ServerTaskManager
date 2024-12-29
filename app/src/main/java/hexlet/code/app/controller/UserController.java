@@ -9,6 +9,7 @@ import hexlet.code.app.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,12 @@ public class UserController {
     private UserMapper userMapper;
 
     @GetMapping
-    public List<UserDTO> index() {
-        return userRepository.findAll().stream().map(userMapper::map).toList();
+    public ResponseEntity<List<UserDTO>> index() {
+        var users = userRepository.findAll();
+        var res = users.stream().map(userMapper::map).toList();
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(users.size()))
+                .body(res);
     }
 
     @GetMapping(path = "/{id}")
