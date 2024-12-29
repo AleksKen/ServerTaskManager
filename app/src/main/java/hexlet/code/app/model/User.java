@@ -30,7 +30,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "users")
 @ToString(includeFieldNames = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class User implements UserDetails {
+public class User implements UserDetails, BaseEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @ToString.Include

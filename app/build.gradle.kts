@@ -5,6 +5,7 @@ plugins {
 	application
 	checkstyle
 	jacoco
+	id("io.freefair.lombok") version "8.6"
 	id("org.springframework.boot") version "3.4.2-SNAPSHOT"
 	id("io.spring.dependency-management") version "1.1.7"
 }
@@ -48,6 +49,11 @@ dependencies {
 	// tests
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+
+	testImplementation(platform("org.junit:junit-bom:5.10.0"))
+	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+	testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.2")
 	// DB
 	runtimeOnly("com.h2database:h2:2.2.224")
 	implementation("org.postgresql:postgresql:42.7.3")
@@ -56,6 +62,9 @@ dependencies {
 	// mapper
 	implementation("org.mapstruct:mapstruct:1.6.0.Beta1")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.6.0.Beta1")
+	// faker и instancio;
+	implementation("net.datafaker:datafaker:2.0.2")
+	implementation("org.instancio:instancio-junit:3.6.0")
 }
 
 tasks.test {
