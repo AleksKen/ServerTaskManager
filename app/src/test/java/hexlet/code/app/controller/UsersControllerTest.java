@@ -22,11 +22,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -139,5 +141,20 @@ public class UsersControllerTest {
         assertThat(user.getFirstName()).isEqualTo(testUser.getFirstName());
         assertThat(user.getLastName()).isEqualTo(lastName);
         assertThat(user.getPassword()).isNotEqualTo(testUser.getPassword());
+    }
+
+    @Test
+    public void testDestroy() throws Exception {
+        var dto = userMapper.build(testUser);
+        userRepository.save(userMapper.map(dto));
+        var user = userRepository.findByEmail(testUser.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+
+        var request = delete("/api/users/{id}", user.getId()).with(jwt());
+
+        mockMvc.perform(request)
+                .andExpect(status().isNoContent());
+
+        assertThat(userRepository.findByEmail(testUser.getEmail())).isEmpty();
     }
 }
