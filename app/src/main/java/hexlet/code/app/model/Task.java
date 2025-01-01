@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotNull;
@@ -19,13 +20,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "task_statuses")
+@Table(name = "tasks")
 @Getter
 @Setter
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
-public class TaskStatus {
+public class Task {
     @Id
     @EqualsAndHashCode.Include
     @ToString.Include
@@ -34,30 +35,20 @@ public class TaskStatus {
 
     @Size(min = 1)
     @NotNull
-    @Column(unique = true)
     private String name;
 
-    @Size(min = 1)
+    private Long index;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @ManyToOne(optional = false)
     @NotNull
-    @Column(unique = true)
-    private String slug;
+    private TaskStatus taskStatus;
+
+    @ManyToOne(optional = false)
+    private User assignee;
 
     @CreatedDate
     private LocalDate createdAt;
-
-//    @OneToMany(
-//            mappedBy = "taskStatus",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true)
-//    private List<Task> tasks = new ArrayList<>();
-//
-//    public void addTask(Task task) {
-//        tasks.add(task);
-//        task.setTaskStatus(this);
-//    }
-//
-//    public void removeTask(Task task) {
-//        tasks.remove(task);
-//        task.setTaskStatus(null);
-//    }
 }
