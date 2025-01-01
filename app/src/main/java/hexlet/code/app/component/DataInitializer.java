@@ -46,8 +46,8 @@ public class DataInitializer implements ApplicationRunner {
 
         var statusData = new TaskStatusCreateDTO();
         var status = new TaskStatus();
-        var names = List.of("ToReview", "ToBeFixed", "ToPublish", "Published");
-        var slugs = List.of("to_review", "to_be_fixed", "to_publish", "published");
+        var names = List.of("Draft", "ToReview", "ToBeFixed", "ToPublish", "Published");
+        var slugs = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");
         for (var i = 0; i < 5; i++) {
             statusData.setName(names.get(i));
             statusData.setSlug(slugs.get(i));
