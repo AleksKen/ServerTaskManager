@@ -37,11 +37,13 @@ public class DataInitializer implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         var email = admin.getEmail();
         var password = admin.getPassword();
-        var userData = new UserCreateDTO();
-        userData.setEmail(email);
-        userData.setPassword(password);
-        var user = userMapper.map(userData);
-        userRepository.save(user);
+        if (userRepository.findByEmail(email).isEmpty()) {
+            var userData = new UserCreateDTO();
+            userData.setEmail(email);
+            userData.setPassword(password);
+            var user = userMapper.map(userData);
+            userRepository.save(user);
+        }
 
         var names = List.of("Draft", "ToReview", "ToBeFixed", "ToPublish", "Published");
         var slugs = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");

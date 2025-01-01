@@ -131,23 +131,23 @@ public class TaskStatusControllerTest {
         assertThat(status.getSlug()).isEqualTo(slug);
     }
 
-//    @Test
-//    public void testUpdateWithoutAuth() throws Exception {
-//        taskStatusRepository.save(testTaskStatus);
-//        var name = faker.hearthstone().mainCharacter();
-//        var slug = faker.zodiac().sign();
-//        var data = new HashMap<>();
-//        data.put("name", name);
-//        data.put("slug", slug);
-//
-//        var status = taskStatusRepository.findBySlug(testTaskStatus.getSlug())
-//                .orElseThrow(() -> new ResourceNotFoundException("Status not found!"));
-//
-//        var request = put("/api/task_statuses/{id}", status.getId())
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(om.writeValueAsString(data));
-//        mockMvc.perform(request).andExpect(status().isUnauthorized());
-//    }
+    @Test
+    public void testUpdateWithoutAuth() throws Exception {
+        taskStatusRepository.save(testTaskStatus);
+        var name = faker.hearthstone().mainCharacter();
+        var slug = faker.zodiac().sign();
+        var data = new HashMap<>();
+        data.put("name", name);
+        data.put("slug", slug);
+
+        var status = taskStatusRepository.findBySlug(testTaskStatus.getSlug())
+                .orElseThrow(() -> new ResourceNotFoundException("Status not found!"));
+
+        var request = put("/api/task_statuses/{id}", status.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(data));
+        mockMvc.perform(request).andExpect(status().isUnauthorized());
+    }
 
     @Test
     public void testUpdateEmptyName() throws Exception {
