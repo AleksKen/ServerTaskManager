@@ -63,6 +63,8 @@ dependencies {
 	// faker и instancio;
 	implementation("net.datafaker:datafaker:2.0.2")
 	implementation("org.instancio:instancio-junit:3.6.0")
+
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 }
 
 tasks.test {
