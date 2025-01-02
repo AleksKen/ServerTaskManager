@@ -5,6 +5,7 @@ import hexlet.code.app.exception.ResourceNotFoundException;
 import hexlet.code.app.mapper.TaskMapper;
 import hexlet.code.app.mapper.UserMapper;
 import hexlet.code.app.model.Task;
+import hexlet.code.app.repository.LabelRepository;
 import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.repository.UserRepository;
@@ -23,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Set;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -56,6 +58,9 @@ public class TaskControllerTest {
     private UserRepository userRepository;
 
     @Autowired
+    private LabelRepository labelRepository;
+
+    @Autowired
     private TaskMapper taskMapper;
 
     @Autowired
@@ -79,6 +84,7 @@ public class TaskControllerTest {
                 .create();
         testTask.setTaskStatus(taskStatusRepository.findById(1L).get());
         testTask.setAssignee(userRepository.findByEmail("hexlet@example.com").get());
+        testTask.setLabels(Set.of(labelRepository.findByName("bug").get()));
     }
 
     @Test

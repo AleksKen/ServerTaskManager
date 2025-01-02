@@ -1,10 +1,13 @@
 package hexlet.code.app.component;
 
+import hexlet.code.app.dto.label.LabelCreateDTO;
 import hexlet.code.app.dto.taskStatus.TaskStatusCreateDTO;
 import hexlet.code.app.dto.user.UserCreateDTO;
+import hexlet.code.app.mapper.LabelMapper;
 import hexlet.code.app.mapper.TaskStatusMapper;
 import hexlet.code.app.mapper.UserMapper;
 import hexlet.code.app.model.TaskStatus;
+import hexlet.code.app.repository.LabelRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -29,6 +32,12 @@ public class DataInitializer implements ApplicationRunner {
 
     @Autowired
     private TaskStatusRepository taskStatusRepository;
+
+    @Autowired
+    private LabelMapper labelMapper;
+
+    @Autowired
+    private LabelRepository labelRepository;
 
     @Autowired
     private final AdminInfo admin;
@@ -56,6 +65,16 @@ public class DataInitializer implements ApplicationRunner {
                 statusData.setSlug(slugs.get(i));
                 status = taskStatusMapper.map(statusData);
                 taskStatusRepository.save(status);
+            }
+        }
+
+        names = List.of("feature", "bug");
+        for (var name : names) {
+            if (labelRepository.findByName(name).isEmpty()) {
+                var labelData = new LabelCreateDTO();
+                labelData.setName(name);
+                var label = labelMapper.map(labelData);
+                labelRepository.save(label);
             }
         }
     }
