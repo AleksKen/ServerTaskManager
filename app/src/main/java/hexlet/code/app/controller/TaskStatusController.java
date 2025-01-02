@@ -6,7 +6,6 @@ import hexlet.code.app.dto.taskStatus.TaskStatusUpdateDTO;
 import hexlet.code.app.exception.ResourceNotFoundException;
 import hexlet.code.app.mapper.TaskStatusMapper;
 import hexlet.code.app.repository.TaskStatusRepository;
-import hexlet.code.app.util.UserUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,9 +30,6 @@ public class TaskStatusController {
 
     @Autowired
     private TaskStatusMapper taskStatusMapper;
-
-    @Autowired
-    private UserUtils userUtils;
 
     @GetMapping
     public ResponseEntity<List<TaskStatusDTO>> index() {
