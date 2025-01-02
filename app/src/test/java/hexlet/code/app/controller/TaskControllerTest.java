@@ -1,6 +1,7 @@
 package hexlet.code.app.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.app.dto.TaskParamDTO;
 import hexlet.code.app.exception.ResourceNotFoundException;
 import hexlet.code.app.mapper.TaskMapper;
 import hexlet.code.app.mapper.UserMapper;
@@ -82,7 +83,7 @@ public class TaskControllerTest {
                 .build();
         testTask = Instancio.of(modelGenerator.getTaskModel())
                 .create();
-        testTask.setTaskStatus(taskStatusRepository.findById(1L).get());
+        testTask.setTaskStatus(taskStatusRepository.findBySlug("draft").get());
         testTask.setAssignee(userRepository.findByEmail("hexlet@example.com").get());
         testTask.setLabels(Set.of(labelRepository.findByName("bug").get()));
     }
@@ -95,6 +96,27 @@ public class TaskControllerTest {
                 .andReturn();
         var body = result.getResponse().getContentAsString();
         assertThatJson(body).isArray();
+    }
+
+    @Test
+    public void testIndexWithParams() throws Exception {
+        var params = new TaskParamDTO();
+        params.setAssigneeId(userRepository.findByEmail("hexlet@example.com").get().getId());
+        params.setStatus("draft");
+        params.setLabelId(labelRepository.findByName("bug").get().getId());
+        params.setTitleCont(testTask.getName().substring(3).toUpperCase());
+        taskRepository.save(testTask);
+        var result = mockMvc.perform(get("/api/tasks?titleCont=" + params.getTitleCont()
+                        + "&assigneeId=" + params.getAssigneeId()
+                        + "&status=" + params.getStatus()
+                        + "&labelId=" + params.getLabelId()).with(jwt()))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+        assertThatJson(body).isArray().element(0).and(
+                v -> v.node("title").isEqualTo(testTask.getName()),
+                v -> v.node("status").isEqualTo(testTask.getTaskStatus().getSlug())
+        );
     }
 
     @Test
