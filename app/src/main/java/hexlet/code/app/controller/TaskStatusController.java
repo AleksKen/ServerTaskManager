@@ -3,9 +3,7 @@ package hexlet.code.app.controller;
 import hexlet.code.app.dto.taskStatus.TaskStatusCreateDTO;
 import hexlet.code.app.dto.taskStatus.TaskStatusDTO;
 import hexlet.code.app.dto.taskStatus.TaskStatusUpdateDTO;
-import hexlet.code.app.exception.ResourceNotFoundException;
-import hexlet.code.app.mapper.TaskStatusMapper;
-import hexlet.code.app.repository.TaskStatusRepository;
+import hexlet.code.app.service.TaskStatusService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,14 +24,11 @@ import java.util.List;
 @RequestMapping(path = "/api/task_statuses")
 public class TaskStatusController {
     @Autowired
-    private TaskStatusRepository taskStatusRepository;
-
-    @Autowired
-    private TaskStatusMapper taskStatusMapper;
+    private TaskStatusService taskStatusService;
 
     @GetMapping
     public ResponseEntity<List<TaskStatusDTO>> index() {
-        var res = taskStatusRepository.findAll().stream().map(taskStatusMapper::map).toList();
+        var res = taskStatusService.index();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(res.size()))
                 .body(res);
@@ -41,30 +36,23 @@ public class TaskStatusController {
 
     @GetMapping(path = "/{id}")
     public TaskStatusDTO show(@PathVariable Long id) {
-        return taskStatusMapper.map(taskStatusRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Status with id " + id + " not found!")));
+        return taskStatusService.show(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TaskStatusDTO create(@Valid @RequestBody TaskStatusCreateDTO dto) {
-        var status = taskStatusMapper.map(dto);
-        taskStatusRepository.save(status);
-        return taskStatusMapper.map(status);
+        return taskStatusService.create(dto);
     }
 
     @PutMapping(path = "/{id}")
     public TaskStatusDTO update(@PathVariable Long id, @Valid @RequestBody TaskStatusUpdateDTO dto) {
-        var status = taskStatusRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Status with id " + id + " not found!"));
-        taskStatusMapper.update(dto, status);
-        taskStatusRepository.save(status);
-        return taskStatusMapper.map(status);
+        return taskStatusService.update(id, dto);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroy(@PathVariable Long id) {
-        taskStatusRepository.deleteById(id);
+        taskStatusService.destroy(id);
     }
 }
