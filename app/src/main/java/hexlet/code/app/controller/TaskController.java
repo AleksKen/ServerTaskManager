@@ -1,8 +1,8 @@
 package hexlet.code.app.controller;
 
-import hexlet.code.app.dto.TaskCreateDTO;
-import hexlet.code.app.dto.TaskDTO;
-import hexlet.code.app.dto.TaskUpdateDTO;
+import hexlet.code.app.dto.task.TaskCreateDTO;
+import hexlet.code.app.dto.task.TaskDTO;
+import hexlet.code.app.dto.task.TaskUpdateDTO;
 import hexlet.code.app.exception.ResourceNotFoundException;
 import hexlet.code.app.mapper.TaskMapper;
 import hexlet.code.app.repository.TaskRepository;
@@ -63,11 +63,11 @@ public class TaskController {
     @PutMapping(path = "/{id}")
     @PreAuthorize("@userUtils.isAuthenticated()")
     public TaskDTO update(@PathVariable Long id, @Valid @RequestBody TaskUpdateDTO dto) {
-        var status = taskRepository.findById(id)
+        var task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found!"));
-        taskMapper.update(dto, status);
-        taskRepository.save(status);
-        return taskMapper.map(status);
+        taskMapper.update(dto, task);
+        taskRepository.save(task);
+        return taskMapper.map(task);
     }
 
     @DeleteMapping(path = "/{id}")
