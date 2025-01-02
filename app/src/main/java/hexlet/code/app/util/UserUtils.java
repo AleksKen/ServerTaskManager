@@ -13,14 +13,6 @@ public class UserUtils {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean isAuthenticated() {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return false;
-        }
-        return true;
-    }
-
     public User getCurrentUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {

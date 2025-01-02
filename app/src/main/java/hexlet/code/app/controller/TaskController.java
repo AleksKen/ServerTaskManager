@@ -11,7 +11,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,7 +44,6 @@ public class TaskController {
     }
 
     @GetMapping(path = "/{id}")
-    @PreAuthorize("@userUtils.isAuthenticated()")
     public TaskDTO show(@PathVariable Long id) {
         return taskMapper.map(taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found!")));
@@ -53,7 +51,6 @@ public class TaskController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@userUtils.isAuthenticated()")
     public TaskDTO create(@Valid @RequestBody TaskCreateDTO dto) {
         var task = taskMapper.map(dto);
         taskRepository.save(task);
@@ -61,7 +58,6 @@ public class TaskController {
     }
 
     @PutMapping(path = "/{id}")
-    @PreAuthorize("@userUtils.isAuthenticated()")
     public TaskDTO update(@PathVariable Long id, @Valid @RequestBody TaskUpdateDTO dto) {
         var task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found!"));

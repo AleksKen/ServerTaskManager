@@ -11,7 +11,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +51,6 @@ public class TaskStatusController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@userUtils.isAuthenticated()")
     public TaskStatusDTO create(@Valid @RequestBody TaskStatusCreateDTO dto) {
         var status = taskStatusMapper.map(dto);
         taskStatusRepository.save(status);
@@ -60,7 +58,6 @@ public class TaskStatusController {
     }
 
     @PutMapping(path = "/{id}")
-    @PreAuthorize("@userUtils.isAuthenticated()")
     public TaskStatusDTO update(@PathVariable Long id, @Valid @RequestBody TaskStatusUpdateDTO dto) {
         var status = taskStatusRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Status with id " + id + " not found!"));
@@ -71,7 +68,6 @@ public class TaskStatusController {
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("@userUtils.isAuthenticated()")
     public void destroy(@PathVariable Long id) {
         taskStatusRepository.deleteById(id);
     }
