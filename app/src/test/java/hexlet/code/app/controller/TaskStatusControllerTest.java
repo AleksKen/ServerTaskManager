@@ -9,7 +9,6 @@ import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.repository.UserRepository;
 import hexlet.code.app.util.ModelGenerator;
 import net.datafaker.Faker;
-import org.assertj.core.api.Assertions;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -183,6 +182,6 @@ public class TaskStatusControllerTest {
         var request = delete("/api/task_statuses/{id}", status.getId()).with(jwt());
         mockMvc.perform(request).andExpect(status().isNoContent());
 
-        Assertions.assertThat(taskStatusRepository.findBySlug(testTaskStatus.getSlug())).isEmpty();
+        assertThat(taskStatusRepository.findBySlug(testTaskStatus.getSlug())).isEmpty();
     }
 }
