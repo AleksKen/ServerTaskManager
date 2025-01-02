@@ -6,6 +6,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,6 +19,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "task_statuses")
@@ -25,7 +29,7 @@ import java.time.LocalDate;
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
-public class TaskStatus {
+public class TaskStatus implements BaseEntity {
     @Id
     @EqualsAndHashCode.Include
     @ToString.Include
@@ -45,19 +49,9 @@ public class TaskStatus {
     @CreatedDate
     private LocalDate createdAt;
 
-//    @OneToMany(
-//            mappedBy = "taskStatus",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true)
-//    private List<Task> tasks = new ArrayList<>();
-//
-//    public void addTask(Task task) {
-//        tasks.add(task);
-//        task.setTaskStatus(this);
-//    }
-//
-//    public void removeTask(Task task) {
-//        tasks.remove(task);
-//        task.setTaskStatus(null);
-//    }
+    @OneToMany(
+            mappedBy = "taskStatus",
+            cascade = CascadeType.MERGE,
+            orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
 }

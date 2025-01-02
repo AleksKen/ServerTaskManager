@@ -55,9 +55,9 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@userUtils.isAuthenticated()")
     public TaskDTO create(@Valid @RequestBody TaskCreateDTO dto) {
-        var status = taskMapper.map(dto);
-        taskRepository.save(status);
-        return taskMapper.map(status);
+        var task = taskMapper.map(dto);
+        taskRepository.save(task);
+        return taskMapper.map(task);
     }
 
     @PutMapping(path = "/{id}")

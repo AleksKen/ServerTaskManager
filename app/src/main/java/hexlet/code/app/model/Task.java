@@ -26,7 +26,7 @@ import java.time.LocalDate;
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
-public class Task {
+public class Task implements BaseEntity {
     @Id
     @EqualsAndHashCode.Include
     @ToString.Include
