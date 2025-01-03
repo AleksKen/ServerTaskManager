@@ -8,6 +8,7 @@ plugins {
 	id("io.freefair.lombok") version "8.6"
 	id("org.springframework.boot") version "3.4.2-SNAPSHOT"
 	id("io.spring.dependency-management") version "1.1.7"
+	id ("io.sentry.jvm.gradle") version "4.14.1"
 }
 
 group = "hexlet.code"
@@ -66,6 +67,18 @@ dependencies {
 	// API documentation
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 }
+
+sentry {
+	includeSourceContext = true
+	org = "maria-konyashova"
+	projectName = "java-spring-boot"
+	authToken = System.getenv("SENTRY_AUTH_TOKEN")
+}
+
+tasks.sentryBundleSourcesJava {
+	enabled = System.getenv("SENTRY_AUTH_TOKEN") != null
+}
+
 
 tasks.test {
 	useJUnitPlatform()

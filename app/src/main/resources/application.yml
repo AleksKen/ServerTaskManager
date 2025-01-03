@@ -19,6 +19,10 @@ server:
   address: 0.0.0.0
   port: ${PORT:8080}
 
+sentry:
+  dsn: https://f84ca897ed4440bc9d70d9ed241afb58@o4508578557132800.ingest.de.sentry.io/4508578560409680
+  traces-sample-rate: 1.0
+
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
