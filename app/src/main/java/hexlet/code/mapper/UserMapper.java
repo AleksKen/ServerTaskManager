@@ -31,15 +31,17 @@ public abstract class UserMapper {
 
     @BeforeMapping
     public void encryptPassword(UserCreateDTO data) {
-        var password = data.getPassword();
-        data.setPassword(passwordEncoder.encode(password));
+        if (data.getPassword() != null) {
+            String password = data.getPassword();
+            data.setPassword(passwordEncoder.encode(password));
+        }
     }
 
     @BeforeMapping
     public void encryptPassword(UserUpdateDTO data) {
-        JsonNullable<String> password = data.getPassword();
-        if (password != null && password.isPresent()) {
-            password.ifPresent(pwd -> data.setPassword(JsonNullable.of(passwordEncoder.encode(pwd))));
+        if (data.getPassword() != null) {
+            String password = data.getPassword().get();
+            data.setPassword(JsonNullable.of(passwordEncoder.encode(password)));
         }
     }
 }
