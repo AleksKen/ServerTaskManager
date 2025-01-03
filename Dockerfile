@@ -25,4 +25,4 @@ ENV SPRING_PROFILES_ACTIVE "production"
 
 EXPOSE 7070
 
-CMD build/install/app/bin/app --spring.profiles.active=$SPRING_PROFILES_ACTIVE
+CMD app/build/install/app/bin/app --spring.profiles.active=$SPRING_PROFILES_ACTIVE
