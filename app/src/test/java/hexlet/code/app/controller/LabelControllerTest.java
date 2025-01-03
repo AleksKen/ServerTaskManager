@@ -8,6 +8,7 @@ import hexlet.code.app.repository.LabelRepository;
 import hexlet.code.app.util.ModelGenerator;
 import net.datafaker.Faker;
 import org.instancio.Instancio;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,11 @@ public class LabelControllerTest {
                 .build();
         testLabel = Instancio.of(modelGenerator.getLabelModel())
                 .create();
+    }
+
+    @AfterEach
+    public void clean() {
+        labelRepository.deleteAll();
     }
 
     @Test

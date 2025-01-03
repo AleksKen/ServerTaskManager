@@ -5,7 +5,9 @@ import hexlet.code.app.dto.TaskParamDTO;
 import hexlet.code.app.exception.ResourceNotFoundException;
 import hexlet.code.app.mapper.TaskMapper;
 import hexlet.code.app.mapper.UserMapper;
+import hexlet.code.app.model.Label;
 import hexlet.code.app.model.Task;
+import hexlet.code.app.model.TaskStatus;
 import hexlet.code.app.repository.LabelRepository;
 import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
@@ -13,6 +15,7 @@ import hexlet.code.app.repository.UserRepository;
 import hexlet.code.app.util.ModelGenerator;
 import net.datafaker.Faker;
 import org.instancio.Instancio;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +77,8 @@ public class TaskControllerTest {
     private ModelGenerator modelGenerator;
 
     private Task testTask;
+    private TaskStatus testTaskStatus;
+    private Label testLabel;
 
     @BeforeEach
     public void setUp() {
@@ -83,9 +88,25 @@ public class TaskControllerTest {
                 .build();
         testTask = Instancio.of(modelGenerator.getTaskModel())
                 .create();
-        testTask.setTaskStatus(taskStatusRepository.findBySlug("draft").get());
+
+        testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
+                .create();
+        taskStatusRepository.save(testTaskStatus);
+        testTask.setTaskStatus(testTaskStatus);
+
+        testLabel = Instancio.of(modelGenerator.getLabelModel())
+                .create();
+        labelRepository.save(testLabel);
+        testTask.setLabels(Set.of(testLabel));
+
         testTask.setAssignee(userRepository.findByEmail("hexlet@example.com").get());
-        testTask.setLabels(Set.of(labelRepository.findByName("bug").get()));
+    }
+
+    @AfterEach
+    public void clean() {
+        taskRepository.deleteAll();
+        taskStatusRepository.deleteAll();
+        labelRepository.deleteAll();
     }
 
     @Test
@@ -102,8 +123,8 @@ public class TaskControllerTest {
     public void testIndexWithParams() throws Exception {
         var params = new TaskParamDTO();
         params.setAssigneeId(userRepository.findByEmail("hexlet@example.com").get().getId());
-        params.setStatus("draft");
-        params.setLabelId(labelRepository.findByName("bug").get().getId());
+        params.setStatus(testTaskStatus.getSlug());
+        params.setLabelId(testLabel.getId());
         params.setTitleCont(testTask.getName().substring(3).toUpperCase());
         taskRepository.save(testTask);
         var result = mockMvc.perform(get("/api/tasks?titleCont=" + params.getTitleCont()
@@ -158,29 +179,23 @@ public class TaskControllerTest {
         var data = new HashMap<>();
         data.put("title", title);
 
-        var taskCount = taskRepository.findAll().stream().count();
-        var task = taskRepository.findById(taskCount).get();
-
-        var request = put("/api/tasks/{id}", task.getId()).with(jwt())
+        var request = put("/api/tasks/{id}", testTask.getId()).with(jwt())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
-        mockMvc.perform(request).andExpect(status().isOk());
+        var result = mockMvc.perform(request).andExpect(status().isOk()).andReturn();
+        var body = result.getResponse().getContentAsString();
 
-        taskCount = taskRepository.findAll().stream().count();
-        task = taskRepository.findById(taskCount).get();
-
-        assertThat(task.getName()).isEqualTo(title);
+        assertThatJson(body).and(
+                v -> v.node("title").isEqualTo(title)
+        );
     }
 
     @Test
     public void testDestroy() throws Exception {
         taskRepository.save(testTask);
-        var taskCount = taskRepository.findAll().stream().count();
-        var task = taskRepository.findById(taskCount).get();
-
-        var request = delete("/api/tasks/{id}", taskCount).with(jwt());
+        var id = testTask.getId();
+        var request = delete("/api/tasks/{id}", id).with(jwt());
         mockMvc.perform(request).andExpect(status().isNoContent());
-
-        assertThat(taskRepository.findById(taskCount)).isEmpty();
+        assertThat(taskRepository.findById(id)).isEmpty();
     }
 }
