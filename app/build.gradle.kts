@@ -75,6 +75,10 @@ sentry {
 	authToken = System.getenv("SENTRY_AUTH_TOKEN")
 }
 
+checkstyle {
+	configFile = file("config/checkstyle/checkstyle.xml")
+}
+
 tasks.sentryBundleSourcesJava {
 	enabled = System.getenv("SENTRY_AUTH_TOKEN") != null
 }
