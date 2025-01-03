@@ -79,7 +79,6 @@ tasks.sentryBundleSourcesJava {
 	enabled = System.getenv("SENTRY_AUTH_TOKEN") != null
 }
 
-
 tasks.test {
 	useJUnitPlatform()
 	// https://technology.lastminute.com/junit5-kotlin-and-gradle-dsl/
