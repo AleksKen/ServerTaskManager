@@ -1,19 +1,12 @@
 FROM eclipse-temurin:21-jdk
 
-WORKDIR /java-project-99
+WORKDIR /app
 
-# Копируем файлы Gradle
-COPY gradle gradle
-COPY app/build.gradle.kts .
-COPY settings.gradle.kts .
-COPY gradlew .
+# Копируем все
+COPY . .
 
 # Загружаем зависимости
 RUN ./gradlew --no-daemon dependencies
-
-# Копируем исходный код и конфиги
-COPY app/src src
-COPY app/config config
 
 # Сборка проекта
 RUN ./gradlew --no-daemon build
@@ -25,4 +18,4 @@ ENV SPRING_PROFILES_ACTIVE "production"
 
 EXPOSE 7070
 
-CMD app/build/install/app/bin/app --spring.profiles.active=$SPRING_PROFILES_ACTIVE
+CMD ./app/build/install/app/bin/app --spring.profiles.active=${SPRING_PROFILES_ACTIVE}
