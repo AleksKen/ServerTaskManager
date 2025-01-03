@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jdk
 
-WORKDIR /app
+WORKDIR /java-project-99
 
 # Копируем файлы Gradle
 COPY gradle gradle
