@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Копируем файлы Gradle
 COPY gradle gradle
-COPY build.gradle.kts .
+COPY app/build.gradle.kts .
 COPY settings.gradle.kts .
 COPY gradlew .
 
@@ -12,8 +12,8 @@ COPY gradlew .
 RUN ./gradlew --no-daemon dependencies
 
 # Копируем исходный код и конфиги
-COPY src src
-COPY config config
+COPY app/src src
+COPY app/config config
 
 # Сборка проекта
 RUN ./gradlew --no-daemon build
