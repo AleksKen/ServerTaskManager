@@ -18,7 +18,8 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Objects;
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -72,8 +73,9 @@ public abstract class TaskMapper {
     Set<Label> getLabels(Set<Long> labelIds) {
         return labelRepository.findAll()
                 .stream()
-                .map(label -> labelIds.contains(label.getId()) ? label : null)
-                .filter(Objects::nonNull)
+                .filter(label -> Optional.ofNullable(labelIds)
+                        .orElse(Collections.emptySet())
+                        .contains(label.getId()))
                 .collect(Collectors.toSet());
     }
 }
