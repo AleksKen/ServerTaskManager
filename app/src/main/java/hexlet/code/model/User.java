@@ -53,7 +53,7 @@ public class User implements UserDetails, BaseEntity {
     private String email;
 
     @Size(min = 3)
-    @NotNull
+    @NotBlank
     private String password;
 
     @CreatedDate
