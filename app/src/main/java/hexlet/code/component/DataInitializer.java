@@ -39,13 +39,10 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private LabelRepository labelRepository;
 
-    @Autowired
-    private final AdminInfo admin;
-
     @Override
     public void run(ApplicationArguments args) {
-        var email = admin.getEmail();
-        var password = admin.getPassword();
+        var email = "hexlet@example.com";
+        var password = "qwerty";
         if (userRepository.findByEmail(email).isEmpty()) {
             var userData = new UserCreateDTO();
             userData.setEmail(email);
