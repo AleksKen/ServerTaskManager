@@ -66,6 +66,7 @@ dependencies {
 	implementation("org.instancio:instancio-junit:3.6.0")
 	// API documentation
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0")
+	implementation("org.springdoc:springdoc-openapi-starter-common:2.8.0")
 }
 
 sentry {
