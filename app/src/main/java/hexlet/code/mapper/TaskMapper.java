@@ -7,8 +7,10 @@ import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
+import hexlet.code.model.User;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
+import hexlet.code.repository.UserRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -36,6 +38,9 @@ public abstract class TaskMapper {
     @Autowired
     private LabelRepository labelRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Mapping(source = "taskStatus.slug", target = "status")
     @Mapping(source = "assignee.id", target = "assigneeId")
     @Mapping(source = "name", target = "title")
@@ -44,14 +49,14 @@ public abstract class TaskMapper {
     public abstract TaskDTO map(Task taskStatus);
 
     @Mapping(target = "taskStatus", source = "status")
-    @Mapping(target = "assignee", source = "assigneeId")
+    @Mapping(target = "assignee", source = "assigneeId", qualifiedByName = "getAssignee")
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "getLabels")
     public abstract Task map(TaskCreateDTO dto);
 
     @Mapping(target = "taskStatus", source = "status")
-    @Mapping(target = "assignee", source = "assigneeId")
+    @Mapping(target = "assignee", source = "assigneeId", qualifiedByName = "getAssignee")
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "getLabels")
@@ -60,6 +65,15 @@ public abstract class TaskMapper {
     public TaskStatus toEntity(String slug) {
         return taskStatusRepository.findBySlug(slug)
                 .orElseThrow(() -> new ResourceNotFoundException("Status not found"));
+    }
+
+    @Named("getAssignee")
+    User getAssignee(Long assigneeId) {
+        if (assigneeId == null) {
+            return null;
+        }
+        return userRepository.findById(assigneeId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     @Named("getLabelIds")
