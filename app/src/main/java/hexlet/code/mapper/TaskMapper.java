@@ -72,8 +72,7 @@ public abstract class TaskMapper {
         if (assigneeId == null) {
             return null;
         }
-        return userRepository.findById(assigneeId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return userRepository.findById(assigneeId).get();
     }
 
     @Named("getLabelIds")
