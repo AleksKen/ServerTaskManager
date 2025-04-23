@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -45,6 +46,12 @@ public class User implements UserDetails, BaseEntity {
     @ToString.Include
     private String lastName;
 
+    @ToString.Include
+    private String title;
+
+    @ToString.Include
+    private String role;
+
     @Email
     @Column(unique = true)
     @ToString.Include
@@ -59,6 +66,12 @@ public class User implements UserDetails, BaseEntity {
 
     @LastModifiedDate
     private LocalDate updatedAt;
+
+    @NotNull
+    private Boolean isAdmin;
+
+    @NotNull
+    private Boolean isActive;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

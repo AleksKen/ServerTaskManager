@@ -65,8 +65,8 @@ dependencies {
 	implementation("net.datafaker:datafaker:2.0.2")
 	implementation("org.instancio:instancio-junit:3.6.0")
 	// API documentation
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
-	implementation("org.springdoc:springdoc-openapi-starter-common:2.1.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
+	implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.6")
 }
 
 sentry {

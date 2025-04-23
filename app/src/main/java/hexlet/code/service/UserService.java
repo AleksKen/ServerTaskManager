@@ -19,6 +19,11 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    public UserDTO findByEmail(String email) {
+        return userMapper.map(userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User with email " + email + " not found!")));
+    }
+
     public List<UserDTO> index() {
         return userRepository.findAll().stream().map(userMapper::map).toList();
     }

@@ -13,10 +13,18 @@ public class UserCreateDTO {
 
     private String lastName;
 
+    private String title;
+
+    private String role;
+
     @Email
     private String email;
 
     @Size(min = 3)
     @NotBlank
     private String password;
+
+    private Boolean isAdmin;
+
+    private Boolean isActive;
 }
