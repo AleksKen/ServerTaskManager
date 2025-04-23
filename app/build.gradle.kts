@@ -11,7 +11,7 @@ plugins {
 	id ("io.sentry.jvm.gradle") version "4.14.1"
 }
 
-group = "hexlet.code"
+group = "app.code"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -21,7 +21,7 @@ java {
 }
 
 application {
-	mainClass = "hexlet.code.AppApplication"
+	mainClass = "app.code.AppApplication"
 }
 
 configurations {

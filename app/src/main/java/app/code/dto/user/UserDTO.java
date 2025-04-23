@@ -1,0 +1,28 @@
+package app.code.dto.user;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDate;
+
+@Getter
+@Setter
+public class UserDTO {
+    private Long id;
+
+    private String email;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String title;
+
+    private String role;
+
+    private LocalDate createdAt;
+
+    private Boolean isAdmin;
+
+    private Boolean isActive;
+}
