@@ -7,8 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -17,9 +19,12 @@ public class TaskDTO {
     private Long id;
     private String title;
     private String description;
-    private LocalDate deadline;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Instant deadline;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Instant createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Instant updatedAt;
     private String priority;
     private String stage;
     private Set<UserDTO> team;

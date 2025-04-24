@@ -18,7 +18,11 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @AllArgsConstructor
@@ -74,15 +78,17 @@ public class DataInitializer implements ApplicationRunner {
             }
         }
 
-        var activityData = new ActivityCreateDTO();
-        activityData.setType("Геометрия");
-        var activity = activityMapper.map(activityData);
-        activityRepository.save(activity);
+//        var activityData = new ActivityCreateDTO();
+//        activityData.setType("Геометрия");
+//        var activity = activityMapper.map(activityData);
+//        activityRepository.save(activity);
 
         var taskData = new TaskCreateDTO();
         taskData.setTitle("Геометрия");
         taskData.setPriority("high");
         taskData.setStage("todo");
+        taskData.setDeadline(Instant.now());
+        taskData.setTeamIds(Set.of(1L));
 
         var task = taskMapper.map(taskData);
         taskRepository.save(task);

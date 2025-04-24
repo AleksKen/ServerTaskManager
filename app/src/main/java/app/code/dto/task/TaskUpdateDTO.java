@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.Set;
 public class TaskUpdateDTO {
     private JsonNullable<String> title;
     private JsonNullable<String> description;
-    private JsonNullable<LocalDate> deadline;
+    private JsonNullable<Instant> deadline;
     private JsonNullable<String> priority;
     private JsonNullable<String> stage;
     private JsonNullable<Set<Long>> teamIds;

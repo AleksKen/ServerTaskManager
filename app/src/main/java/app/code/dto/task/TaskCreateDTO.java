@@ -4,7 +4,8 @@ import app.code.dto.user.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.Set;
 public class TaskCreateDTO {
     private String title;
     private String description;
-    private LocalDate deadline;
+    private Instant deadline;
     private String priority;
     private String stage;
     private Set<Long> teamIds;
