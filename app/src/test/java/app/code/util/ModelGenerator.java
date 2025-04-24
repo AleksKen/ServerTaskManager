@@ -2,7 +2,6 @@ package app.code.util;
 
 import app.code.model.Label;
 import app.code.model.Task;
-import app.code.model.TaskStatus;
 import app.code.model.User;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 @Getter
 public class ModelGenerator {
     private Model<User> userModel;
-    private Model<TaskStatus> taskStatusModel;
     private Model<Task> taskModel;
     private Model<Label> labelModel;
 
@@ -36,21 +34,6 @@ public class ModelGenerator {
                 .supply(Select.field(User::getPassword), () -> faker.kpop().girlGroups())
                 .toModel();
 
-        taskStatusModel = Instancio.of(TaskStatus.class)
-                .ignore(Select.field(TaskStatus::getId))
-                .ignore(Select.field(TaskStatus::getCreatedAt))
-                .supply(Select.field(TaskStatus::getName), () -> faker.address().cityName())
-                .supply(Select.field(TaskStatus::getSlug), () -> faker.internet().slug())
-                .toModel();
-
-        taskModel = Instancio.of(Task.class)
-                .ignore(Select.field(Task::getId))
-                .ignore(Select.field(Task::getTaskStatus))
-                .ignore(Select.field(Task::getAssignee))
-                .ignore(Select.field(Task::getCreatedAt))
-                .ignore(Select.field(Task::getLabels))
-                .supply(Select.field(Task::getName), () -> faker.gameOfThrones().dragon())
-                .toModel();
 
         labelModel = Instancio.of(Label.class)
                 .ignore(Select.field(Label::getId))

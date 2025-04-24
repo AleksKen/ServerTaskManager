@@ -7,10 +7,8 @@ import app.code.mapper.TaskMapper;
 import app.code.mapper.UserMapper;
 import app.code.model.Label;
 import app.code.model.Task;
-import app.code.model.TaskStatus;
 import app.code.repository.LabelRepository;
 import app.code.repository.TaskRepository;
-import app.code.repository.TaskStatusRepository;
 import app.code.repository.UserRepository;
 import app.code.util.ModelGenerator;
 import net.datafaker.Faker;
@@ -56,9 +54,6 @@ public class TaskControllerTest {
     private TaskRepository taskRepository;
 
     @Autowired
-    private TaskStatusRepository taskStatusRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -77,7 +72,6 @@ public class TaskControllerTest {
     private ModelGenerator modelGenerator;
 
     private Task testTask;
-    private TaskStatus testTaskStatus;
     private Label testLabel;
 
     @BeforeEach
@@ -89,23 +83,17 @@ public class TaskControllerTest {
         testTask = Instancio.of(modelGenerator.getTaskModel())
                 .create();
 
-        testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
-                .create();
-        taskStatusRepository.save(testTaskStatus);
-        testTask.setTaskStatus(testTaskStatus);
 
         testLabel = Instancio.of(modelGenerator.getLabelModel())
                 .create();
         labelRepository.save(testLabel);
         testTask.setLabels(Set.of(testLabel));
 
-        testTask.setAssignee(userRepository.findByEmail("hexlet@example.com").get());
     }
 
     @AfterEach
     public void clean() {
         taskRepository.deleteAll();
-        taskStatusRepository.deleteAll();
         labelRepository.deleteAll();
     }
 
@@ -123,7 +111,6 @@ public class TaskControllerTest {
     public void testIndexWithParams() throws Exception {
         var params = new TaskParamDTO();
         params.setAssigneeId(userRepository.findByEmail("hexlet@example.com").get().getId());
-        params.setStatus(testTaskStatus.getSlug());
         params.setLabelId(testLabel.getId());
         params.setTitleCont(testTask.getName().substring(3).toUpperCase());
         taskRepository.save(testTask);
@@ -135,8 +122,7 @@ public class TaskControllerTest {
                 .andReturn();
         var body = result.getResponse().getContentAsString();
         assertThatJson(body).isArray().element(0).and(
-                v -> v.node("title").isEqualTo(testTask.getName()),
-                v -> v.node("status").isEqualTo(testTask.getTaskStatus().getSlug())
+                v -> v.node("title").isEqualTo(testTask.getName())
         );
     }
 
@@ -152,8 +138,7 @@ public class TaskControllerTest {
         var body = result.getResponse().getContentAsString();
 
         assertThatJson(body).and(
-                v -> v.node("title").isEqualTo(testTask.getName()),
-                v -> v.node("status").isEqualTo(testTask.getTaskStatus().getSlug())
+                v -> v.node("title").isEqualTo(testTask.getName())
         );
     }
 
@@ -169,7 +154,6 @@ public class TaskControllerTest {
 
         var task = taskRepository.findByName(testTask.getName()).get();
         assertThat(task.getName()).isEqualTo(testTask.getName());
-        assertThat(task.getTaskStatus().getSlug()).isEqualTo(testTask.getTaskStatus().getSlug());
     }
 
     @Test

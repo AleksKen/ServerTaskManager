@@ -3,12 +3,11 @@ package app.code.mapper;
 import app.code.dto.task.TaskCreateDTO;
 import app.code.dto.task.TaskDTO;
 import app.code.dto.task.TaskUpdateDTO;
-import app.code.exception.ResourceNotFoundException;
 import app.code.model.Label;
 import app.code.model.Task;
-import app.code.model.TaskStatus;
+import app.code.model.User;
 import app.code.repository.LabelRepository;
-import app.code.repository.TaskStatusRepository;
+import app.code.repository.UserRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -31,35 +30,34 @@ import java.util.stream.Collectors;
 )
 public abstract class TaskMapper {
     @Autowired
-    private TaskStatusRepository taskStatusRepository;
-
-    @Autowired
     private LabelRepository labelRepository;
 
-    @Mapping(source = "taskStatus.slug", target = "status")
-    @Mapping(source = "assignee.id", target = "assigneeId")
+    @Autowired
+    private UserRepository userRepository;
+
     @Mapping(source = "name", target = "title")
-    @Mapping(source = "description", target = "content")
     @Mapping(source = "labels", target = "taskLabelIds", qualifiedByName = "getLabelIds")
     public abstract TaskDTO map(Task taskStatus);
 
-    @Mapping(target = "taskStatus", source = "status")
-    @Mapping(target = "assignee", source = "assigneeId")
+
     @Mapping(target = "name", source = "title")
-    @Mapping(target = "description", source = "content")
     @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "getLabels")
+    @Mapping(target = "team", source = "teamIds", qualifiedByName = "getTeam")
     public abstract Task map(TaskCreateDTO dto);
 
-    @Mapping(target = "taskStatus", source = "status")
-    @Mapping(target = "assignee", source = "assigneeId")
     @Mapping(target = "name", source = "title")
-    @Mapping(target = "description", source = "content")
-    @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "getLabels")
+    @Mapping(target = "team", source = "teamIds", qualifiedByName = "getTeam")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 
-    public TaskStatus toEntity(String slug) {
-        return taskStatusRepository.findBySlug(slug)
-                .orElseThrow(() -> new ResourceNotFoundException("Status not found"));
+
+    @Named("getTeam")
+    Set<User> getTeam(Set<Long> teamIds) {
+        return userRepository.findAll()
+                .stream()
+                .filter(user -> Optional.ofNullable(teamIds)
+                        .orElse(Collections.emptySet())
+                        .contains(user.getId()))
+                .collect(Collectors.toSet());
     }
 
     @Named("getLabelIds")

@@ -1,14 +1,6 @@
 package app.code.model;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
@@ -16,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
@@ -39,21 +32,29 @@ public class Task implements BaseEntity {
     @NotNull
     private String name;
 
-    private Long index;
+    private String priority;
+
+    private String stage;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(optional = false)
-    @NotNull
-    private TaskStatus taskStatus;
+    @ManyToMany
+    private Set<User> team;
 
-    @ManyToOne(optional = true)
-    private User assignee;
+    private Set<String> assets;
+
+    private LocalDate deadline;
 
     @CreatedDate
     private LocalDate createdAt;
 
+    @LastModifiedDate
+    private LocalDate updatedAt;
+
     @ManyToMany
     private Set<Label> labels;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Activity> activities;
 }

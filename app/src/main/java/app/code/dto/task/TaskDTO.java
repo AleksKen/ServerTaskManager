@@ -1,5 +1,7 @@
 package app.code.dto.task;
 
+import app.code.dto.activity.ActivityDTO;
+import app.code.dto.user.UserDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -13,13 +15,15 @@ import java.util.Set;
 @Setter
 public class TaskDTO {
     private Long id;
-    private Long index;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate createdAt;
-    private String status;
-    @JsonProperty("assignee_id")
-    private Long assigneeId;
     private String title;
-    private String content;
+    private String description;
+    private LocalDate deadline;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
+    private String priority;
+    private String stage;
+    private Set<UserDTO> team;
+    private Set<ActivityDTO> activities;
+    private Set<String> assets;
     private Set<Long> taskLabelIds;
 }

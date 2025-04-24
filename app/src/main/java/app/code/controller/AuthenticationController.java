@@ -15,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
     @Autowired
     private JWTUtils jwtUtils;
@@ -28,7 +29,6 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> create(@RequestBody AuthRequest authRequest) {
         var authentication = new UsernamePasswordAuthenticationToken(

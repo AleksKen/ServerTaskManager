@@ -1,14 +1,16 @@
 package app.code.component;
 
+import app.code.dto.activity.ActivityCreateDTO;
 import app.code.dto.label.LabelCreateDTO;
-import app.code.dto.taskStatus.TaskStatusCreateDTO;
+import app.code.dto.task.TaskCreateDTO;
 import app.code.dto.user.UserCreateDTO;
+import app.code.mapper.ActivityMapper;
 import app.code.mapper.LabelMapper;
-import app.code.mapper.TaskStatusMapper;
+import app.code.mapper.TaskMapper;
 import app.code.mapper.UserMapper;
-import app.code.model.TaskStatus;
+import app.code.repository.ActivityRepository;
 import app.code.repository.LabelRepository;
-import app.code.repository.TaskStatusRepository;
+import app.code.repository.TaskRepository;
 import app.code.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +30,22 @@ public class DataInitializer implements ApplicationRunner {
     private UserRepository userRepository;
 
     @Autowired
-    private TaskStatusMapper taskStatusMapper;
-
-    @Autowired
-    private TaskStatusRepository taskStatusRepository;
-
-    @Autowired
     private LabelMapper labelMapper;
 
     @Autowired
     private LabelRepository labelRepository;
+
+    @Autowired
+    private TaskMapper taskMapper;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private ActivityMapper activityMapper;
+
+    @Autowired
+    private ActivityRepository activityRepository;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -56,21 +64,7 @@ public class DataInitializer implements ApplicationRunner {
             userRepository.save(user);
         }
 
-        var names = List.of("Draft", "ToReview", "ToBeFixed", "ToPublish", "Published");
-        var slugs = List.of("draft", "to_review", "to_be_fixed", "to_publish", "published");
-        for (var i = 0; i < 5; i++) {
-            if (taskStatusRepository.findByName(names.get(i)).isEmpty()
-                    && taskStatusRepository.findBySlug(slugs.get(i)).isEmpty()) {
-                var statusData = new TaskStatusCreateDTO();
-                var status = new TaskStatus();
-                statusData.setName(names.get(i));
-                statusData.setSlug(slugs.get(i));
-                status = taskStatusMapper.map(statusData);
-                taskStatusRepository.save(status);
-            }
-        }
-
-        names = List.of("feature", "bug");
+        var names = List.of("feature", "bug");
         for (var name : names) {
             if (labelRepository.findByName(name).isEmpty()) {
                 var labelData = new LabelCreateDTO();
@@ -79,5 +73,19 @@ public class DataInitializer implements ApplicationRunner {
                 labelRepository.save(label);
             }
         }
+
+        var activityData = new ActivityCreateDTO();
+        activityData.setType("Геометрия");
+        var activity = activityMapper.map(activityData);
+        activityRepository.save(activity);
+
+        var taskData = new TaskCreateDTO();
+        taskData.setTitle("Геометрия");
+        taskData.setPriority("high");
+        taskData.setStage("todo");
+
+        var task = taskMapper.map(taskData);
+        taskRepository.save(task);
+
     }
 }

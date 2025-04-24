@@ -1,25 +1,21 @@
 package app.code.dto.task;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import app.code.dto.user.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
 @Setter
 public class TaskCreateDTO {
-    private Long index;
-    @JsonProperty("assignee_id")
-    private Long assigneeId;
-    @NotBlank
-    @Size(min = 1)
     private String title;
-    private String content;
-    @NotBlank
-    @Size(min = 1)
-    private String status;
+    private String description;
+    private LocalDate deadline;
+    private String priority;
+    private String stage;
+    private Set<Long> teamIds;
+    private Set<String> assets;
     private Set<Long> taskLabelIds;
 }

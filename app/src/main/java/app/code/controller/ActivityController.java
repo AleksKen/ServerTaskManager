@@ -1,9 +1,9 @@
 package app.code.controller;
 
-import app.code.dto.label.LabelCreateDTO;
-import app.code.dto.label.LabelDTO;
-import app.code.dto.label.LabelUpdateDTO;
-import app.code.service.LabelService;
+import app.code.dto.activity.ActivityCreateDTO;
+import app.code.dto.activity.ActivityDTO;
+import app.code.dto.activity.ActivityUpdateDTO;
+import app.code.service.ActivityService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,39 +13,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/labels")
+@RequestMapping(path = "/api/activities")
 @CrossOrigin(origins = "http://localhost:3000")
-public class LabelController {
+public class ActivityController {
     @Autowired
-    private LabelService labelService;
+    private ActivityService activityService;
 
     @GetMapping
-    public ResponseEntity<List<LabelDTO>> index() {
-        var res = labelService.index();
+    public ResponseEntity<List<ActivityDTO>> index() {
+        var res = activityService.index();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(res.size()))
                 .body(res);
     }
 
     @GetMapping(path = "/{id}")
-    public LabelDTO show(@PathVariable Long id) {
-        return labelService.show(id);
+    public ActivityDTO show(@PathVariable Long id) {
+        return activityService.show(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public LabelDTO create(@Valid @RequestBody LabelCreateDTO dto) {
-        return labelService.create(dto);
+    public ActivityDTO create(@Valid @RequestBody ActivityCreateDTO dto) {
+        return activityService.create(dto);
     }
 
     @PutMapping(path = "/{id}")
-    public LabelDTO update(@PathVariable Long id, @Valid @RequestBody LabelUpdateDTO dto) {
-        return labelService.update(id, dto);
+    public ActivityDTO update(@PathVariable Long id, @Valid @RequestBody ActivityUpdateDTO dto) {
+        return activityService.update(id, dto);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroy(@PathVariable Long id) {
-        labelService.destroy(id);
+        activityService.destroy(id);
     }
 }
