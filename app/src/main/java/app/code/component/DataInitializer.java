@@ -65,7 +65,7 @@ public class DataInitializer implements ApplicationRunner {
             userRepository.save(user);
         }
 
-        var names = List.of("feature", "bug");
+        var names = List.of("алгебра", "геометрия");
         for (var name : names) {
             if (labelRepository.findByName(name).isEmpty()) {
                 var labelData = new LabelCreateDTO();
@@ -81,11 +81,12 @@ public class DataInitializer implements ApplicationRunner {
 //        activityRepository.save(activity);
 
         var taskData = new TaskCreateDTO();
-        taskData.setTitle("Геометрия");
+        taskData.setTitle("ДЗ треугольники и уравнения");
         taskData.setPriority("high");
         taskData.setStage("todo");
         taskData.setDeadline(Instant.now());
         taskData.setTeamIds(Set.of(1L));
+        taskData.setTaskLabelIds(Set.of(1L, 2L));
 
         var task = taskMapper.map(taskData);
         taskRepository.save(task);

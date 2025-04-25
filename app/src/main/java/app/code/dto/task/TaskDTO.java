@@ -1,6 +1,7 @@
 package app.code.dto.task;
 
 import app.code.dto.activity.ActivityDTO;
+import app.code.dto.label.LabelDTO;
 import app.code.dto.user.UserDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -26,5 +27,5 @@ public class TaskDTO {
     private Set<UserDTO> team;
     private Set<ActivityDTO> activities;
     private Set<String> assets;
-    private Set<Long> taskLabelIds;
+    private Set<LabelDTO> labels;
 }

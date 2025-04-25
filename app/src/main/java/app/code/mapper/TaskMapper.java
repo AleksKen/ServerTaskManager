@@ -36,7 +36,6 @@ public abstract class TaskMapper {
     private UserRepository userRepository;
 
     @Mapping(source = "name", target = "title")
-    @Mapping(source = "labels", target = "taskLabelIds", qualifiedByName = "getLabelIds")
     public abstract TaskDTO map(Task taskStatus);
 
 
