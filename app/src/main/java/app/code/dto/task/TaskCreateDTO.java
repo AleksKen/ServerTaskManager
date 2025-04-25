@@ -1,11 +1,9 @@
 package app.code.dto.task;
 
-import app.code.dto.user.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter

@@ -1,6 +1,5 @@
 package app.code.component;
 
-import app.code.dto.activity.ActivityCreateDTO;
 import app.code.dto.label.LabelCreateDTO;
 import app.code.dto.task.TaskCreateDTO;
 import app.code.dto.user.UserCreateDTO;
@@ -19,8 +18,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 

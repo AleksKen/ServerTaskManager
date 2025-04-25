@@ -3,14 +3,10 @@ package app.code.dto.task;
 import app.code.dto.activity.ActivityDTO;
 import app.code.dto.user.UserDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.time.LocalDate;
-
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
