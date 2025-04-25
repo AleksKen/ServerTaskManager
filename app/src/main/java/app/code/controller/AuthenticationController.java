@@ -5,6 +5,7 @@ import app.code.mapper.UserMapper;
 import app.code.service.UserService;
 import app.code.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,6 +38,13 @@ public class AuthenticationController {
         authenticationManager.authenticate(authentication);
 
         var user = userService.findByEmail(authRequest.getUsername());
+
+        if (!user.getIsActive()) {
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(Map.of("message", "Your account is inactive."));
+        }
+
 
         String token = jwtUtils.generateToken(authRequest.getUsername());
 
