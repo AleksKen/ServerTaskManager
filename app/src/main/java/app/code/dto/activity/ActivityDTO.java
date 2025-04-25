@@ -1,9 +1,10 @@
 package app.code.dto.activity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -14,5 +15,6 @@ public class ActivityDTO {
 
     private String content;
 
-    private LocalDate createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Instant createdAt;
 }

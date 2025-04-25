@@ -8,7 +8,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Entity
 @Table(name = "activities")
@@ -29,7 +29,7 @@ public class Activity implements BaseEntity {
     private String content;
 
     @CreatedDate
-    private LocalDate createdAt;
+    private Instant createdAt;
 
     @ManyToOne
     @JoinColumn(name = "task_id")

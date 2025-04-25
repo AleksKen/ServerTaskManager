@@ -11,4 +11,6 @@ public class ActivityCreateDTO {
     private String type;
 
     private String content;
+
+    private Long taskId;
 }

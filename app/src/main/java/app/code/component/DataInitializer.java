@@ -75,10 +75,6 @@ public class DataInitializer implements ApplicationRunner {
             }
         }
 
-//        var activityData = new ActivityCreateDTO();
-//        activityData.setType("Геометрия");
-//        var activity = activityMapper.map(activityData);
-//        activityRepository.save(activity);
 
         var taskData = new TaskCreateDTO();
         taskData.setTitle("ДЗ треугольники и уравнения");
