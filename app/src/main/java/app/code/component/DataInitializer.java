@@ -50,7 +50,7 @@ public class DataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        var email = "hexlet@example.com";
+        var email = "maria@example.com";
         var password = "qwerty";
         if (userRepository.findByEmail(email).isEmpty()) {
             var userData = new UserCreateDTO();
