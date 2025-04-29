@@ -1,10 +1,9 @@
 package app.code.controller;
 
-import app.code.dto.TaskParamDTO;
-import app.code.dto.task.TaskCreateDTO;
-import app.code.dto.task.TaskDTO;
-import app.code.dto.task.TaskUpdateDTO;
-import app.code.service.TaskService;
+import app.code.dto.notification.NotificationCreateDTO;
+import app.code.dto.notification.NotificationDTO;
+import app.code.dto.notification.NotificationUpdateDTO;
+import app.code.service.NotificationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,39 +22,39 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/tasks")
+@RequestMapping(path = "/api/notifications")
 @CrossOrigin(origins = "http://localhost:3000")
-public class TaskController {
+public class NotificationController {
     @Autowired
-    private TaskService taskService;
+    private NotificationService notificationService;
 
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> index(TaskParamDTO params) {
-        var res = taskService.index(params);
+    public ResponseEntity<List<NotificationDTO>> index() {
+        var res = notificationService.index();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(res.size()))
                 .body(res);
     }
 
     @GetMapping(path = "/{id}")
-    public TaskDTO show(@PathVariable Long id) {
-        return taskService.show(id);
+    public NotificationDTO show(@PathVariable Long id) {
+        return notificationService.show(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TaskDTO create(@Valid @RequestBody TaskCreateDTO dto) {
-        return taskService.create(dto);
+    public NotificationDTO create(@Valid @RequestBody NotificationCreateDTO dto) {
+        return notificationService.create(dto);
     }
 
     @PutMapping(path = "/{id}")
-    public TaskDTO update(@PathVariable Long id, @Valid @RequestBody TaskUpdateDTO dto) {
-        return taskService.update(id, dto);
+    public NotificationDTO update(@PathVariable Long id, @Valid @RequestBody NotificationUpdateDTO dto) {
+        return notificationService.update(id, dto);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroy(@PathVariable Long id) {
-       taskService.destroy(id);
+        notificationService.destroy(id);
     }
 }

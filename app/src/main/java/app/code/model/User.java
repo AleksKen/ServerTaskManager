@@ -57,6 +57,8 @@ public class User implements UserDetails, BaseEntity {
     @ToString.Include
     private String email;
 
+    private String avatarProfile;
+
     @Size(min = 3)
     @NotBlank
     private String password;

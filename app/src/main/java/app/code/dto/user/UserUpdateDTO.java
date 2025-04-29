@@ -22,6 +22,8 @@ public class UserUpdateDTO {
     @Email
     private JsonNullable<String> email;
 
+    private JsonNullable<String> avatarProfile;
+
     @Size(min = 3)
     @NotBlank
     private JsonNullable<String> password;

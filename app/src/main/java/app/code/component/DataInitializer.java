@@ -3,14 +3,12 @@ package app.code.component;
 import app.code.dto.label.LabelCreateDTO;
 import app.code.dto.task.TaskCreateDTO;
 import app.code.dto.user.UserCreateDTO;
-import app.code.mapper.ActivityMapper;
-import app.code.mapper.LabelMapper;
-import app.code.mapper.TaskMapper;
 import app.code.mapper.UserMapper;
-import app.code.repository.ActivityRepository;
-import app.code.repository.LabelRepository;
-import app.code.repository.TaskRepository;
 import app.code.repository.UserRepository;
+import app.code.mapper.TaskMapper;
+import app.code.repository.TaskRepository;
+import app.code.mapper.LabelMapper;
+import app.code.repository.LabelRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -41,12 +39,6 @@ public class DataInitializer implements ApplicationRunner {
 
     @Autowired
     private TaskRepository taskRepository;
-
-    @Autowired
-    private ActivityMapper activityMapper;
-
-    @Autowired
-    private ActivityRepository activityRepository;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -87,5 +79,15 @@ public class DataInitializer implements ApplicationRunner {
         var task = taskMapper.map(taskData);
         taskRepository.save(task);
 
+
+        var userData = new UserCreateDTO();
+        userData.setEmail("eva@mail.ru");
+        userData.setPassword("12345");
+        userData.setFirstName("Eva");
+        userData.setLastName("Poltorak");
+        userData.setIsActive(true);
+        userData.setIsAdmin(false);
+        var user = userMapper.map(userData);
+        userRepository.save(user);
     }
 }

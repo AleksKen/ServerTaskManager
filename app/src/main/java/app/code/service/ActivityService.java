@@ -30,17 +30,17 @@ public class ActivityService {
     }
 
     public ActivityDTO create(ActivityCreateDTO dto) {
-        var label = activityMapper.map(dto);
-        activityRepository.save(label);
-        return activityMapper.map(label);
+        var activity = activityMapper.map(dto);
+        activityRepository.save(activity);
+        return activityMapper.map(activity);
     }
 
     public ActivityDTO update(Long id, ActivityUpdateDTO dto) {
-        var label = activityRepository.findById(id)
+        var activity = activityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Activity with id " + id + " not found!"));
-        activityMapper.update(dto, label);
-        activityRepository.save(label);
-        return activityMapper.map(label);
+        activityMapper.update(dto, activity);
+        activityRepository.save(activity);
+        return activityMapper.map(activity);
     }
 
     public void destroy(Long id) {

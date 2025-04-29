@@ -13,6 +13,8 @@ public class UserDTO {
 
     private String email;
 
+    private String avatarProfile;
+
     private String firstName;
 
     private String lastName;
