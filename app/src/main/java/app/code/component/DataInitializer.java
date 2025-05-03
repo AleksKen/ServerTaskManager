@@ -44,6 +44,7 @@ public class DataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        log.debug("ИНИЦИАЛИЗАЙИЯ НАЧАЛАСЬ");
         var email = "maria@example.com";
         var password = "qwerty";
         if (userRepository.findByEmail(email).isEmpty()) {
