@@ -13,7 +13,7 @@ spring:
     ansi:
       enabled: always
   profiles:
-    default: development
+    default: production
 
 server:
   address: 0.0.0.0
