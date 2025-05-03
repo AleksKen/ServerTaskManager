@@ -20,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = {"http://localhost:3000", "https://mariatask.netlify.app"})
+@CrossOrigin(origins = "https://mariatask.netlify.app")
 public class AuthenticationController {
     @Autowired
     private JWTUtils jwtUtils;
