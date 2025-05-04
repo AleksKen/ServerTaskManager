@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/tasks")
-@CrossOrigin(origins = "https://mariatask.netlify.app")
+@CrossOrigin(origins = {"http://localhost:3000", "https://mariatask.netlify.app"})
 public class TaskController {
     @Autowired
     private TaskService taskService;
