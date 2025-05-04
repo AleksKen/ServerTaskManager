@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/users")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class UserController {
     @Autowired
     private UserService userService;
