@@ -10,7 +10,6 @@ import app.code.repository.TaskRepository;
 import app.code.mapper.LabelMapper;
 import app.code.repository.LabelRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -20,7 +19,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
-@Slf4j
 @Component
 @AllArgsConstructor
 public class DataInitializer implements ApplicationRunner {
@@ -56,7 +54,6 @@ public class DataInitializer implements ApplicationRunner {
             userData.setIsAdmin(true);
 
             var user = userMapper.map(userData);
-            log.debug("ПАРОЛЬ: {}", user.getPassword());
             userRepository.save(user);
         }
 
