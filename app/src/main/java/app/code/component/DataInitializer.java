@@ -1,12 +1,9 @@
 package app.code.component;
 
 import app.code.dto.label.LabelCreateDTO;
-import app.code.dto.task.TaskCreateDTO;
 import app.code.dto.user.UserCreateDTO;
 import app.code.mapper.UserMapper;
 import app.code.repository.UserRepository;
-import app.code.mapper.TaskMapper;
-import app.code.repository.TaskRepository;
 import app.code.mapper.LabelMapper;
 import app.code.repository.LabelRepository;
 import lombok.AllArgsConstructor;
@@ -15,9 +12,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.util.List;
-import java.util.Set;
 
 @Component
 @AllArgsConstructor
@@ -33,12 +28,6 @@ public class DataInitializer implements ApplicationRunner {
 
     @Autowired
     private LabelRepository labelRepository;
-
-    @Autowired
-    private TaskMapper taskMapper;
-
-    @Autowired
-    private TaskRepository taskRepository;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -66,28 +55,5 @@ public class DataInitializer implements ApplicationRunner {
                 labelRepository.save(label);
             }
         }
-
-
-        var taskData = new TaskCreateDTO();
-        taskData.setTitle("ДЗ треугольники и уравнения");
-        taskData.setPriority("high");
-        taskData.setStage("todo");
-        taskData.setDeadline(Instant.now());
-        taskData.setTeamIds(Set.of(1L));
-        taskData.setTaskLabelIds(Set.of(1L, 2L));
-
-        var task = taskMapper.map(taskData);
-        taskRepository.save(task);
-
-
-        var userData = new UserCreateDTO();
-        userData.setEmail("eva@mail.ru");
-        userData.setPassword("12345");
-        userData.setFirstName("Eva");
-        userData.setLastName("Poltorak");
-        userData.setIsActive(true);
-        userData.setIsAdmin(false);
-        var user = userMapper.map(userData);
-        userRepository.save(user);
     }
 }
