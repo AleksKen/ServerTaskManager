@@ -44,7 +44,7 @@ public class DataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        log.error("ИНИЦИАЛИЗАЙИЯ НАЧАЛАСЬ");
+        log.debug("ИНИЦИАЛИЗАЙИЯ НАЧАЛАСЬ");
         var email = "maria@example.com";
         var password = "qwerty";
         if (userRepository.findByEmail(email).isEmpty()) {
@@ -57,7 +57,7 @@ public class DataInitializer implements ApplicationRunner {
             userData.setIsAdmin(true);
 
             var user = userMapper.map(userData);
-            log.error("ПАРОЛЬ: {}", user.getPassword());
+            log.debug("ПАРОЛЬ: {}", user.getPassword());
             userRepository.save(user);
         }
 
