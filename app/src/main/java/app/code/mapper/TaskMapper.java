@@ -45,7 +45,6 @@ public abstract class TaskMapper {
     public abstract Task map(TaskCreateDTO dto);
 
     @Mapping(target = "name", source = "title")
-    @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "getLabels")
     @Mapping(target = "team", source = "teamIds", qualifiedByName = "getTeam")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 
@@ -57,6 +56,13 @@ public abstract class TaskMapper {
                 .filter(user -> Optional.ofNullable(teamIds)
                         .orElse(Collections.emptySet())
                         .contains(user.getId()))
+                .collect(Collectors.toSet());
+    }
+
+    @Named("getLabelIds")
+    Set<Long> getLabelIds(Set<Label> labels) {
+        return labels.stream()
+                .map(Label::getId)
                 .collect(Collectors.toSet());
     }
 
