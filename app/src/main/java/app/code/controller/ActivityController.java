@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/activities")
-@CrossOrigin(origins = {"http://localhost:3000", "https://mariatask.netlify.app"})
+@CrossOrigin(origins = "http://localhost:3000")
 public class ActivityController {
     @Autowired
     private ActivityService activityService;

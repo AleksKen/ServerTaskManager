@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/notifications")
-@CrossOrigin(origins = {"http://localhost:3000", "https://mariatask.netlify.app"})
+@CrossOrigin(origins = "http://localhost:3000")
 public class NotificationController {
     @Autowired
     private NotificationService notificationService;
