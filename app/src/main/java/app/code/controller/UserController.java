@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/users")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://mariatask.netlify.app")
 public class UserController {
     @Autowired
     private UserService userService;

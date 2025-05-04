@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/labels")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://mariatask.netlify.app")
 public class LabelController {
     @Autowired
     private LabelService labelService;
