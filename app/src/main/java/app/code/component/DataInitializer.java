@@ -46,7 +46,7 @@ public class DataInitializer implements ApplicationRunner {
             userRepository.save(user);
         }
 
-        var names = List.of("алгебра", "геометрия");
+        var names = List.of("algebra", "geometry");
         for (var name : names) {
             if (labelRepository.findByName(name).isEmpty()) {
                 var labelData = new LabelCreateDTO();

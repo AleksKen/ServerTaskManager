@@ -3,12 +3,13 @@ package app.code.dto.activity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 @Getter
 @Setter
 public class ActivityUpdateDTO {
     @NotBlank
-    private String type;
+    private JsonNullable<String> type;
 
-    private String content;
+    private JsonNullable<String> content;
 }
