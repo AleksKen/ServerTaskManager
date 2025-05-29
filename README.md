@@ -1,4 +1,6 @@
 # MariaTask
+[![Java CI](https://github.com/AleksKen/ServerTaskManager/actions/workflows/my-check.yml/badge.svg)](https://github.com/AleksKen/ServerTaskManager/actions/workflows/my-check.yml)
+[![Code Coverage](https://qlty.sh/badges/cfd3e864-293f-4fe2-b384-c8b40a9c9a76/test_coverage.svg)](https://qlty.sh/gh/AleksKen/projects/ServerTaskManager)
 
 ### Описание проекта 
 Это серверная часть веб-приложения для управления задачами. Оно позволяет создавать, редактировать, удалять и просматривать задачи, 
