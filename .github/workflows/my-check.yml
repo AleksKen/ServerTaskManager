@@ -20,6 +20,8 @@ jobs:
           arguments: 'build checkstyleMain checkstyleTest'
           gradle-version: 8.7
           build-root-directory: app
+      - name: Run tests and generate JaCoCo report
+        run: report
       - name: Publish code coverage
         uses: qltysh/qlty-action/coverage@v1
         with:
