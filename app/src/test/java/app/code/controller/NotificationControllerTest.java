@@ -2,7 +2,9 @@ package app.code.controller;
 
 import app.code.mapper.NotificationMapper;
 import app.code.model.Notification;
-import app.code.repository.*;
+
+import app.code.repository.NotificationRepository;
+import app.code.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import app.code.exception.ResourceNotFoundException;
 import app.code.util.ModelGenerator;
